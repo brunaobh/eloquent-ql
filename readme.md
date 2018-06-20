@@ -17,11 +17,29 @@ That's it.
 
 
 ```php
-public function index(Request $request)
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+use Search;
+
+class UserController extends Controller
 {
-    $res = $res->negotiate('Models\User');
-    return response()->json($res);
-}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $res = Search::handleRequest($request)
+            ->negotiate('User')
+            ->get();
+        
+        return response()->json($res);
+    }
 ```
 
 Create your filter 
