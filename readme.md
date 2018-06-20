@@ -6,7 +6,7 @@ This library helps to negotiate content related to eloquent models (fields, rela
 
 Install the package using composer:
 
-    $ composer require brunaobh/eloquent-ql ~1.0
+    $ composer require brunaobh/eloquent-ql
 
 Publish the package configuration:
 	$ php artisan vendor:publish --provider="brunaobh\Search\Search\SearchServiceProvider"
