@@ -9,7 +9,7 @@ Install the package using composer:
     $ composer require brunaobh/eloquentQL ~1.0
 
 Publish the package configuration:
-	$ php artisan vendor:publish --provider="Sympla\Search\Search\SearchServiceProvider"
+	$ php artisan vendor:publish --provider="brunaobh\Search\Search\SearchServiceProvider"
 
 That's it.
 
@@ -45,12 +45,12 @@ http://localhost:8000/api/users?fields=name,email&filters=filterByAddressNotNull
 Once Composer has installed or updated your packages you need add aliases or register you packages into Laravel. Open up config/app.php and find the aliases key and add:
 
 ```
-Sympla\Search\Search\SearchServiceProvider::class,
+brunaobh\Search\Search\SearchServiceProvider::class,
 ```
 
 ## Contact
 
-Bruno Coelho <bruno.coelho@sympla.com.br>
+Bruno Coelho <brunaobh@gmail.com>
 
 ## License
 
