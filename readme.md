@@ -36,7 +36,7 @@ public function scopeFilterByAddressNotNull($query)
 Now you simply call your route with your filter and the fields you want to return in the request
 
 ```
-http://localhost:8000/api/users?&fields=name,email&filters=filterByAddressNotNull
+http://localhost:8000/api/users?fields=name,email&filters=filterByAddressNotNull
 ```
 
 ## Using with Laravel
