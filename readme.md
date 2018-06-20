@@ -27,16 +27,16 @@ public function index(Request $request)
 Create your filter 
 
 ```php
-public function scopeFilterByPhone($query)
+public function scopeFilterByAddressNotNull($query)
 {
-   return $query->where('phone', '<>', '');
+   return $query->whereNotNull('address');
 }
 ```
 
 Now you simply call your route with your filter and the fields you want to return in the request
 
 ```
-http://localhost:8000/api/users?&fields=name,email&filters=filterByPhone
+http://localhost:8000/api/users?&fields=name,email&filters=filterByAddressNotNull
 ```
 
 ## Using with Laravel
