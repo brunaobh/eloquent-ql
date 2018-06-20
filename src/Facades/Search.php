@@ -1,6 +1,6 @@
 <?php
 
-namespace Sympla\Search\Facades;
+namespace brunaobh\Search\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

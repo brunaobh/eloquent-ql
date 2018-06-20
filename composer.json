@@ -1,12 +1,12 @@
 {
-    "name": "sympla/the-brick",
+    "name": "brunaobh/eloquentQL",
     "description": "A library that provides content negotiation",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Bruno Coelho",
-            "email": "bruno.coelho@sympla.com.br"
+            "email": "brunaobh@gmail.com"
         }
     ],
     "require": {
@@ -16,12 +16,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Sympla\\Search\\": "src/"
+            "brunaobh\\Search\\": "src/"
         }
     },
     "autoload-dev": {
       "psr-4": {
         "Tests\\": "tests"
       }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sympla\\Search\\Search\\SearchServiceProvider"
+            ]
+        }
     }
 }

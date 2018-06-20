@@ -1,6 +1,6 @@
 <?php
 
-namespace Sympla\Search\Search;
+namespace brunaobh\Search\Search;
 
 use Request;
 use Schema;
@@ -16,6 +16,9 @@ class Search {
     protected $sort = 'ASC';
     protected $limit = null;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->request = Request::all();
@@ -41,6 +44,11 @@ class Search {
         }
     }
 
+    /**
+     * Negotiate method
+     * @param  String $model Eloquent model name
+     * @return Object        Eloquent model
+     */
     public function negotiate($model)
     {
         $modelPrefix = '\App\\';
@@ -59,7 +67,11 @@ class Search {
         return $this->model;
     }
 
-    public function negotiateLimit($limit)
+    /**
+     * Negotiate query limit
+     * @param  Integer $limit To specify the number of records to return.
+     */
+    private function negotiateLimit($limit)
     {
         if (!is_null($limit)) {
             $this->model->limit($limit);
@@ -67,7 +79,13 @@ class Search {
         return $this;
     }
 
-    public function negotiateOrder($table, $order = '', $sort = 'ASC')
+    /**
+     * Negotiate order
+     * @param  String $table Table name
+     * @param  String $order Column name
+     * @param  String $sort  Sorting
+     */
+    private function negotiateOrder($table, $order = '', $sort = 'ASC')
     {
         if (!empty($order) && Schema::hasColumn($table, $order)) {
             $this->model->orderBy($order, $sort?:'ASC');
@@ -75,13 +93,21 @@ class Search {
         return $this;
     }
 
-    public function negotiateRelations($fields)
+    /**
+     * Negotiate eloquent relationships
+     * @param  Array $fields Fields of model relations
+     */
+    private function negotiateRelations($fields)
     {
         $this->model->with($this->parseRelations($fields));
         return $this;
     }
 
-    public function negotiateRelationsFilters($filters)
+    /**
+     * Negotiate query relation filters/conditions
+     * @param  Array $filters Query filters/conditions
+     */
+    private function negotiateRelationsFilters($filters)
     {
         foreach ($filters as $key => $value) {
             $this->model->whereHas($key, function ($query) use ($value) {
@@ -97,7 +123,12 @@ class Search {
         return $this;
     }
 
-    public function negotiateFields($table, $fields)
+    /**
+     * Negotiate fields
+     * @param  String $table  Table name
+     * @param  Array $fields Array of model fields
+     */
+    private function negotiateFields($table, $fields)
     {
         if (count($fields) === 0) {
             return $this;
@@ -123,7 +154,12 @@ class Search {
         }
     }
 
-    public function negotiateFilters($table, $filters)
+    /**
+     * Negotiate filters
+     * @param  String $table   Table name
+     * @param  Array $filters Filters/Conditions
+     */
+    private function negotiateFilters($table, $filters)
     {
         if (count($filters) === 0) {
             return $this;
@@ -167,7 +203,11 @@ class Search {
         }
     }
 
-    public function parseFields($fields)
+    /**
+     * Parse fields
+     * @param  String $fields Fields passed on URL
+     */
+    private function parseFields($fields)
     {
 
         // (do the required processing...)
@@ -201,7 +241,11 @@ class Search {
         }
     }
 
-    public function parseFilters($filters)
+    /**
+     * Parse filters
+     * @param  String $fields Filters passed on URL
+     */
+    private  function parseFilters($filters)
     {
 
         // (do the required processing...)
@@ -235,7 +279,12 @@ class Search {
         }
     }
 
-    public function parseRelations($fields, $relations = [])
+    /**
+     * Parse relations
+     * @param  Array $fields    Array of fields by relation
+     * @param  Array  $relations Relations
+     */
+    private function parseRelations($fields, $relations = [])
     {
         foreach ($fields as $key => $value) {
             $relations[] = $key.(empty($value)?'':':'.$this->setAttribute($value));
@@ -243,7 +292,11 @@ class Search {
         return $relations;
     }
 
-    public function setAttribute($val)
+    /**
+     * Set attribute/column name
+     * @param String $val Attribute name
+     */
+    private function setAttribute($val)
     {
         switch ($this->namingConvention) {
             case 'lowercase':
@@ -260,13 +313,21 @@ class Search {
         }
     }
 
+    /**
+     * Set naming convention
+     */
     public function setUpperCaseConvention()
     {
         $this->namingConvention = 'uppercase';
         return $this;
     }
 
-    public function str_array_pos($string, $array)
+    /**
+     * Method to return query condition
+     * @param  String $string Condition
+     * @param  Array $array  Allowed operators
+     */
+    private function str_array_pos($string, $array)
     {
         for ($i = 0, $n = count($array); $i < $n; $i++) {
             if (($pos = strpos($string, $array[$i])) !== false) {
