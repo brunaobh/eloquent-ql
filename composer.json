@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Sympla\\Search\\Search\\SearchServiceProvider"
+                "brunaobh\\Search\\Search\\SearchServiceProvider"
             ]
         }
     }
