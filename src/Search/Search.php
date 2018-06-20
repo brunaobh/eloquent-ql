@@ -73,6 +73,7 @@ class Search {
         if ($this->request->exists('limit')) {
             $this->limit = $this->request['limit'];
         }
+        return $this;
     }
 
     /**

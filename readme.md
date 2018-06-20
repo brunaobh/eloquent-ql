@@ -44,9 +44,18 @@ http://localhost:8000/api/users?fields=name,email&filters=filterByAddressNotNull
 ### Service Provider (Optional on Laravel 5.5)
 Once Composer has installed or updated your packages you need add aliases or register you packages into Laravel. Open up config/app.php and find the aliases key and add:
 
+Providers:
 ```
 brunaobh\Search\Search\SearchServiceProvider::class,
 ```
+
+Aliases:
+```
+brunaobh\Search\Search\SearchServiceProvider::class,
+
+'Search' => brunaobh\Search\Facades\Search::class,
+```
+
 
 ## Contact
 
