@@ -2,46 +2,25 @@
 
 namespace brunaobh\Search\Search;
 
-use Request;
+use Illuminate\Http\Request;
 use Schema;
 
 class Search {
 
-    protected $fields = [];
-    protected $filters = [];
-    protected $namingConvention = 'lowercase';
-    protected $orderBy = '';
-    protected $relations = [];
-    protected $relationsFilters = [];
-    protected $sort = 'ASC';
-    protected $limit = null;
+    public $fields = [];
+    public $filters = [];
+    public $namingConvention = 'lowercase';
+    public $orderBy = '';
+    public $relations = [];
+    public $relationsFilters = [];
+    public $sort = 'ASC';
+    public $limit = null;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->request = Request::all();
-
-        if (Request::exists('fields')) {
-            $this->parseFields($this->request['fields']);
-        }
-
-        if (Request::exists('filters')) {
-            $this->parseFilters($this->request['filters']);
-        }
-
-        if (Request::exists('orderBy')) {
-            $this->orderBy = $this->request['orderBy'];
-        }
-
-        if (Request::exists('sort')) {
-            $this->sort = $this->request['sort'];
-        }
-
-        if (Request::exists('limit')) {
-            $this->limit = $this->request['limit'];
-        }
     }
 
     /**
@@ -65,6 +44,71 @@ class Search {
             ->negotiateLimit($this->limit);
 
         return $this->model;
+    }
+
+    /**
+     * Handle request
+     * @param  Request Object $request Request http_parse_params(param)
+     */
+    public function handleRequest(Request $request)
+    {
+        $this->request = $request;
+
+        if ($this->request->exists('fields')) {
+            $this->parseFields($this->request['fields']);
+        }
+
+        if ($this->request->exists('filters')) {
+            $this->parseFilters($this->request['filters']);
+        }
+
+        if ($this->request->exists('orderBy')) {
+            $this->orderBy = $this->request['orderBy'];
+        }
+
+        if ($this->request->exists('sort')) {
+            $this->sort = $this->request['sort'];
+        }
+
+        if ($this->request->exists('limit')) {
+            $this->limit = $this->request['limit'];
+        }
+    }
+
+    /**
+     * Get fields
+     * @return Array Fields
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * Get filters
+     * @return Array filters
+     */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    /**
+     * Get relations
+     * @return Array relations
+     */
+    public function getRelations()
+    {
+        return $this->relations;
+    }
+
+    /**
+     * Get relationsFilters
+     * @return Array relationsFilters
+     */
+    public function getRelationsFilters()
+    {
+        return $this->relationsFilters;
     }
 
     /**
@@ -327,7 +371,7 @@ class Search {
      * @param  String $string Condition
      * @param  Array $array  Allowed operators
      */
-    private function str_array_pos($string, $array)
+    public function str_array_pos($string, $array)
     {
         for ($i = 0, $n = count($array); $i < $n; $i++) {
             if (($pos = strpos($string, $array[$i])) !== false) {
